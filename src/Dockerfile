@@ -2,11 +2,11 @@ FROM ubuntu:latest AS build
 
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
-COPY . .
+WORKDIR /app
+COPY spring-verzel-plus/pom.xml /app/
+COPY spring-verzel-plus/ /app/
 
 RUN apt-get install maven -y
-
-COPY pom.xml .
 RUN mvn clean install
 
 FROM openjdk:17
