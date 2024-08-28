@@ -1,16 +1,9 @@
-FROM ubuntu:latests AS build
+FROM openjdk:17
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+WORKDIR /app
 
-RUN apt-get install maven -y
-RUN mvn clean install
-
-FROM openjdk:17-jdk-slim
+COPY target/verzel-plus-0.0.1-SNAPSHOT.jar /app/
 
 EXPOSE 8080
 
-COPY  --from=build /target/verzel-plus-0.0.1-SNAPSHOT.jar app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar"]
+CMD ["java", "-jar", "verzel-plus-0.0.1-SNAPSHOT.jar"]
